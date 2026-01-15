@@ -3463,3 +3463,16 @@ table.table-inbox tbody tr.checked {
 		height: 355px;
 	}
 }
+
+html, body {
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.main-wrapper {
+	overflow-x: hidden;
+}
+
+.page-wrapper {
+	overflow-x: hidden;
+}

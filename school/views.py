@@ -27,4 +27,13 @@ def clear_all_notification(request):
         notification = Notification.objects.filter(user=request.user)
         notification.delete()
         return JsonResponse({'status': 'success'})
-    return HttpResponseForbidden
+    return HttpResponseForbidden()
+
+def admin_dashboard(request):
+    return render(request, "Home/index.html")   # admin dashboard
+
+def teacher_dashboard(request):
+    return render(request, "Home/teacher-dashboard.html")   # teacher dashboard
+
+def student_dashboard(request):
+    return render(request, "students/student-dashboard.html")  # student dashboard

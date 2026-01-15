@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.crypto import get_random_string
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect, render
 
 
 def signup_view(request):

@@ -3,6 +3,15 @@ from django.shortcuts import render, get_object_or_404,redirect
 from .models import *
 from django.contrib import messages
 # Create your views here.
+from django.shortcuts import render
+from .models import Student
+
+def student_list(request):
+    Students = Student.objects.all()
+    return render(request, 'students/students.html' , {'students': Students})
+
+def mark_notifications_as_read(request):
+    return redirect('student_list')
 
 def add_student(request):
     if request.method == "POST":
