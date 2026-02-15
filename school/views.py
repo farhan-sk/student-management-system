@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Notification
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -37,3 +38,70 @@ def teacher_dashboard(request):
 
 def student_dashboard(request):
     return render(request, "students/student-dashboard.html")  # student dashboard
+
+
+# AI FEATURE 
+def ai_assistant(request):
+
+    msg = request.GET.get("message", "").lower()
+
+    # 👉 Simple Language Detection
+    hindi_words = ["kya", "kaise", "hai", "karna", "student", "marks", "attendance"]
+    hindi_detected = any(word in msg for word in hindi_words)
+
+    # ======================
+    # STUDENT DOUBTS
+    # ======================
+    if "attendance" in msg:
+        if hindi_detected:
+            reply = "Attendance Students menu me available hai."
+        else:
+            reply = "Attendance is available inside the Students menu."
+
+    elif "marks" in msg or "result" in msg:
+        if hindi_detected:
+            reply = "Student dashboard me performance section check kare."
+        else:
+            reply = "Check the performance section in the student dashboard."
+
+    # ======================
+    # TEACHER HELP
+    # ======================
+    elif "add student" in msg:
+        if hindi_detected:
+            reply = "Students -> Add Student se new student add kar sakte ho."
+        else:
+            reply = "You can add a new student from Students → Add Student."
+
+    elif "timetable" in msg:
+        if hindi_detected:
+            reply = "Timetable Teachers section me manage hota hai."
+        else:
+            reply = "Timetable is managed inside the Teachers section."
+
+    # ======================
+    # ADMIN QUERIES
+    # ======================
+    elif "fees" in msg:
+        if hindi_detected:
+            reply = "Fees module Accounts section me available hai."
+        else:
+            reply = "Fees module is available in the Accounts section."
+
+    elif "exam" in msg:
+        if hindi_detected:
+            reply = "Exam list dashboard sidebar me milegi."
+        else:
+            reply = "Exam list is available in the dashboard sidebar."
+
+    else:
+        if hindi_detected:
+            reply = "Sorry, mujhe samajh nahi aaya."
+        else:
+            reply = "Sorry, I didn't understand your question."
+
+    return JsonResponse({"reply": reply})
+
+
+def ai_chat_page(request):
+    return render(request,"Home/ai_chat.html")

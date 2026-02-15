@@ -1,0 +1,40 @@
+{% extends "Home/base.html" %}
+{% block body %}
+
+<div style="padding:20px">
+
+<h3>AI Assistant</h3>
+
+<div id="chatBox" style="height:400px;overflow-y:auto;border:1px solid #ddd;padding:10px;border-radius:10px;background:#fafafa">
+</div>
+
+<div style="margin-top:10px;display:flex;gap:10px">
+    <input type="text" id="aiInput" class="form-control" placeholder="Ask something..." />
+    <button onclick="sendAI()" class="btn btn-primary">Send</button>
+</div>
+
+</div>
+
+<script>
+function sendAI(){
+
+    let msg = document.getElementById("aiInput").value;
+
+    if(!msg) return;
+
+    let chat = document.getElementById("chatBox");
+
+    chat.innerHTML += "<div><b>You:</b> "+msg+"</div>";
+
+    fetch("/ai-chat/?message=" + msg)
+    .then(res => res.json())
+    .then(data => {
+        chat.innerHTML += "<div style='color:green'><b>AI:</b> "+data.reply+"</div>";
+        chat.scrollTop = chat.scrollHeight;
+    });
+
+    document.getElementById("aiInput").value="";
+}
+</script>
+
+{% endblock %}

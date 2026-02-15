@@ -13,6 +13,8 @@
       <link rel="stylesheet" href="{%static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
       <link rel="stylesheet" href="{%static 'assets/plugins/fontawesome/css/all.min.css' %}">
       <link rel="stylesheet" href="{%static 'assets/css/style.css' %}">
+      <style>
+         </style>
    </head>
    <body>
       <div class="main-wrapper">
@@ -42,7 +44,7 @@
                   <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                    {% if unread_notification_count > 0 %}
                   <i class="far fa-bell"></i> <span class="badge badge-pill">{{unread_notification_count}}</span>
-                  {% endif %}
+                  {% endif %} 
                   </a>
                   <div class="dropdown-menu notifications">
                      <div class="topnav-dropdown-header">
@@ -143,6 +145,12 @@
                            <li><a href="add-subject.html">Subject Add</a></li>
                            <li><a href="edit-subject.html">Subject Edit</a></li>
                         </ul>
+                     </li>
+                     <li>
+                        <a href="{% url 'ai_chat_page' %}">
+                           <i class="fas fa-robot"></i>
+                           <span>AI Chatbot</span>
+                        </a>
                      </li>
                      <li class="menu-title">
                         <span>Management</span>
@@ -329,9 +337,19 @@
                   });
               }
           });
+          function sendAI(){
+            let msg = document.getElementById("aiInput").value;
+
+            fetch("/ai-chat/?message=" + msg)
+            .then(res=>res.json())
+            .then(data=>{
+               document.getElementById("aiReply").innerText = data.reply;
+            });
+          }
       </script>
       
       
   </body>
   </html>
+  
   
